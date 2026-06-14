@@ -1,0 +1,36 @@
+title: "おすすめ情報ブログ"
+description: "生活をもっと便利に、賢く。厳選したサービス・商品をご紹介します。"
+url: ""  # 後でGitHub PagesのURLに変更
+baseurl: ""
+
+# ビルド設定
+markdown: kramdown
+highlighter: rouge
+permalink: /:year/:month/:day/:title/
+
+# プラグイン
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# ページネーション
+paginate: 10
+paginate_path: "/page:num/"
+
+# 除外ファイル
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - scripts/
+  - README.md
+  - .github/
+
+# デフォルト設定
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "編集部"
