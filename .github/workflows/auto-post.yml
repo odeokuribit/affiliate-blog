@@ -38,6 +38,9 @@ jobs:
       - name: 依存パッケージインストール
         run: echo "依存パッケージなし（テンプレート方式）"
 
+      - name: _postsフォルダ確認
+        run: mkdir -p _posts
+
       - name: 記事生成（手動実行時）
         if: github.event_name == 'workflow_dispatch'
         env:
