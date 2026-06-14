@@ -9,9 +9,13 @@ from datetime import datetime
 
 
 def slugify(title: str) -> str:
-    import re
+    import re, hashlib
+    # 英数字とハイフンのみ残す
     slug = re.sub(r'[^\w\s-]', '', title.lower())
-    slug = re.sub(r'[\s_-]+', '-', slug)
+    slug = re.sub(r'[\s_-]+', '-', slug).strip('-')
+    # 日本語しかない場合はハッシュで短縮
+    if not re.search(r'[a-z0-9]', slug):
+        slug = "post-" + hashlib.md5(title.encode()).hexdigest()[:8]
     return slug[:50] or "article"
 
 
