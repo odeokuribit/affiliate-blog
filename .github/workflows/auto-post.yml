@@ -1,0 +1,64 @@
+name: 記事自動生成・公開
+
+on:
+  schedule:
+    # 毎週月・水・金の朝9時（JST）に自動実行
+    - cron: '0 0 * * 1,3,5'
+  workflow_dispatch:
+    inputs:
+      title:
+        description: '記事タイトル'
+        required: true
+      category:
+        description: 'カテゴリ'
+        required: true
+        default: '副業'
+      cta_text:
+        description: 'CTAボタン文章'
+        required: false
+      cta_url:
+        description: 'アフィリエイトURL'
+        required: false
+
+jobs:
+  generate-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Python セットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 依存パッケージインストール
+        run: pip install google-generativeai
+
+      - name: 記事生成（手動実行時）
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python scripts/generate_article.py \
+            "${{ github.event.inputs.title }}" \
+            "${{ github.event.inputs.category }}" \
+            "${{ github.event.inputs.cta_text }}" \
+            "${{ github.event.inputs.cta_url }}"
+
+      - name: 記事生成（定期実行時）
+        if: github.event_name == 'schedule'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scripts/batch_generate.py
+
+      - name: 変更をコミット・プッシュ
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add _posts/
+          git diff --staged --quiet || git commit -m "🤖 自動記事投稿 $(date +'%Y-%m-%d')"
+          git push
