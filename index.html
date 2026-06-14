@@ -1,0 +1,29 @@
+---
+layout: default
+title: トップページ
+---
+<h2 style="margin-bottom:20px;">最新記事</h2>
+
+<ul class="post-list">
+  {% for post in paginator.posts %}
+  <li>
+    <div class="meta">{{ post.date | date: "%Y年%m月%d日" }}
+      {% for cat in post.categories %}<span style="margin-left:8px;background:#f0e0e0;color:#c0392b;padding:2px 8px;border-radius:4px;font-size:0.78rem;">{{ cat }}</span>{% endfor %}
+    </div>
+    <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+    <p class="excerpt">{{ post.description | default: post.excerpt | strip_html | truncate: 120 }}</p>
+  </li>
+  {% endfor %}
+</ul>
+
+{% if paginator.total_pages > 1 %}
+<nav class="pagination" style="text-align:center;margin:32px 0;">
+  {% if paginator.previous_page %}
+  <a href="{{ paginator.previous_page_path | relative_url }}" style="margin:0 8px;">&laquo; 新しい記事</a>
+  {% endif %}
+  <span>{{ paginator.page }} / {{ paginator.total_pages }}</span>
+  {% if paginator.next_page %}
+  <a href="{{ paginator.next_page_path | relative_url }}" style="margin:0 8px;">古い記事 &raquo;</a>
+  {% endif %}
+</nav>
+{% endif %}
