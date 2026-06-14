@@ -23,7 +23,7 @@ if not API_KEY:
     sys.exit(1)
 
 genai.configure(api_key=API_KEY)
-model = genai.GenerativeModel("gemini-1.5-flash")  # 無料枠あり
+model = genai.GenerativeModel("gemini-2.0-flash")  # 無料枠あり
 
 
 def slugify(title: str) -> str:
