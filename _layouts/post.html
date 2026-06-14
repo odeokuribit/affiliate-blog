@@ -1,0 +1,43 @@
+---
+layout: default
+---
+<article class="post">
+  <header class="post-header">
+    <h1>{{ page.title }}</h1>
+    <div class="post-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y年%m月%d日" }}</time>
+      {% if page.categories %}
+      <span class="categories">
+        {% for cat in page.categories %}<a href="{{ '/category/' | append: cat | relative_url }}">{{ cat }}</a>{% endfor %}
+      </span>
+      {% endif %}
+    </div>
+    {% if page.description %}<p class="post-lead">{{ page.description }}</p>{% endif %}
+  </header>
+
+  <!-- 広告開示 -->
+  <div class="ad-disclosure">
+    ※ 本記事にはアフィリエイト広告が含まれます。
+  </div>
+
+  <div class="post-content">
+    {{ content }}
+  </div>
+
+  <!-- 記事末尾CTA -->
+  {% if page.cta_text and page.cta_url %}
+  <div class="cta-box">
+    <p>{{ page.cta_text }}</p>
+    <a href="{{ page.cta_url }}" class="cta-button" target="_blank" rel="noopener">詳細を見る・無料登録</a>
+  </div>
+  {% endif %}
+
+  <nav class="post-nav">
+    {% if page.previous.url %}
+    <a href="{{ page.previous.url | relative_url }}" class="prev">&laquo; {{ page.previous.title }}</a>
+    {% endif %}
+    {% if page.next.url %}
+    <a href="{{ page.next.url | relative_url }}" class="next">{{ page.next.title }} &raquo;</a>
+    {% endif %}
+  </nav>
+</article>
