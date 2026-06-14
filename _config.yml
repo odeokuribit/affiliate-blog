@@ -1,7 +1,7 @@
-title: "おもちゃ最安値ナビ"
-description: "子供向けおもちゃの最安値を比較！Amazon・楽天・Yahoo!の価格をまとめてチェックできます。"
-url: "https://odeokuribit.github.io"
-baseurl: "/affiliate-blog"
+title: "おすすめ情報ブログ"
+description: "生活をもっと便利に、賢く。厳選したサービス・商品をご紹介します。"
+url: ""  # 後でGitHub PagesのURLに変更
+baseurl: ""
 
 # ビルド設定
 markdown: kramdown
